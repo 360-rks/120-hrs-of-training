@@ -17,6 +17,12 @@ def insert(node,key):
     else:
         node.right = insert(node.right,key)
     return node
+def minValueNode(node):
+    current = node
+    while(current.left is not None):
+        current = current.left
+    return current
+
 def deleteNode(root,key):
     if root is None:
         return root
@@ -33,9 +39,11 @@ def deleteNode(root,key):
             temp = root.left
             root = None
             return temp
-        
         temp = minValueNode(root.right)
         root.key = temp.key
+        root.right = deleteNode(root.right, temp.key)
+    return root
+
 root = None
 root = insert(root,8)
 root = insert(root,3)
@@ -49,3 +57,5 @@ root = insert(root,4)
 print("Inorder traversal: ", end=" ")
 inorder(root)
 print("\nDelete 10")
+root = deleteNode(root, 10)
+inorder(root)
